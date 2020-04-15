@@ -1,0 +1,18 @@
+version: '3'
+
+services: 
+  portainer:
+    image: portainer/portainer
+    command: --host unix:///var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "9001:9000"
+    networks:
+      - portaineroverlay
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      
+networks:
+  portaineroverlay:
